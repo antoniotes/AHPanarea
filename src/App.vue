@@ -1,26 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <router-view></router-view> <!-- Qui verranno visualizzati i componenti in base alla rotta -->
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh; /* Assicura che il div occupi l'intera altezza della viewport */
+  overflow: hidden; /* Nasconde il contenuto in eccesso */
 }
 </style>
