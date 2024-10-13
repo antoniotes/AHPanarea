@@ -1,16 +1,23 @@
 <template>
   <div class="home-container">
-    <video autoplay muted loop id="background-video">
-      <source src="@/assets/video/background3.mp4" type="video/mp4" />
+    <video 
+      id="background-video" 
+      v-if="videoLoaded" 
+      autoplay 
+      loop 
+      muted 
+      playsinline 
+      class="background-video">
+      <source :src="videoSource" type="video/webm">
       Your browser does not support the video tag.
     </video>
     <div class="content">
-      <img src="@/assets/images/logohotelierwhite.png" alt="Logo" class="logo" />
+      <img src="@/assets/images/logohotelierwhite.png" alt="Logo" class="logo" loading="lazy"/>
       <div class="links">
         <router-link to="/isola">L'ISOLA</router-link>
         <router-link to="/arcipelago">L'ARCIPELAGO</router-link>
-        <router-link to="/hotels">GLI HOTELS</router-link>
-        <router-link to="/collegamenti">I COLLEGAMENTI</router-link>
+        <router-link to="/hotels">HOTELS</router-link>
+        <router-link to="/collegamenti">COLLEGAMENTI</router-link>
       </div>
     </div>
   </div>
@@ -19,20 +26,33 @@
 <script>
 export default {
   name: 'HomePage',
+  data() {
+    return {
+      videoLoaded: false,
+      videoSource: '',
+    };
+  },
+  mounted() {
+    this.loadVideo();
+  },
+  methods: {
+    loadVideo() {
+      this.videoSource = require('@/assets/images/background.webm');
+      this.videoLoaded = true;
+    }
+  }
 };
 </script>
 
 <style scoped>
-/* Container to hold the video background and content */
 .home-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
 }
 
-/* Full-screen video background */
-#background-video {
-  position: absolute;
+.background-video {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -41,7 +61,6 @@ export default {
   z-index: -1;
 }
 
-/* Centered content */
 .content {
   position: absolute;
   top: 50%;
@@ -50,24 +69,20 @@ export default {
   text-align: center;
 }
 
-/* Logo styling */
 .logo {
   max-width: 100%;
   height: auto;
-  width: auto; /* Regola la larghezza in base alla dimensione desiderata */
+  width: auto;
 }
 
-/* Flexbox container for links */
 .links {
   display: flex;
-  justify-content: space-between; /* Distribuisce i link equidistantemente */
-  width: auto; /* La stessa larghezza dell'immagine */
-  margin-top: 20px; /* Spazio tra l'immagine e i link */
-
-  padding: 10px
+  justify-content: space-between;
+  width: auto;
+  margin-top: 20px;
+  padding: 10px;
 }
 
-/* Link styling */
 .links a {
   font-size: 1.2rem;
   color: white;
@@ -77,5 +92,21 @@ export default {
 
 .links a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 80%;
+    max-width: 80%;
+  }
+
+  .links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .links a {
+    margin: 10px 0;
+  }
 }
 </style>

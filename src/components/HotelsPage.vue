@@ -1,36 +1,43 @@
 <template>
   <div class="page-container">
     <NavbarPage />
-    <!-- Contenitore wrap che distanzia il contenuto dal bordo del page-container -->
     <div class="wrap">
-      <!-- Titolo della sezione Hotels -->
       <h1 class="title">Gli Hotels</h1>
-
-      <!-- Testo descrittivo -->
       <p class="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam.
-      </p>
+        Gli hotel associati sono situati in posizioni strategiche, offrendo viste mozzafiato sul mare cristallino.
+        Ogni struttura è pensata per offrire un'oasi di tranquillità e bellezza, perfettamente integrata nel paesaggio
+        naturale circostante.
+        Le camere sono arredate con gusto, combinando elementi tradizionali e moderni, per garantire il massimo comfort
+        ai nostri ospiti. </p>
+      <p class="description">
+        La nostra missione è quella di promuovere un turismo sostenibile che rispetti l'ambiente e valorizzi le
+        tradizioni locali.
+        Ci impegniamo a utilizzare pratiche eco-compatibili e a sostenere l'economia locale, collaborando con artigiani
+        e produttori del luogo.
+        Offriamo una gamma di servizi personalizzati, pensati per soddisfare ogni esigenza dei nostri ospiti,
+        assicurando al contempo il massimo comfort e un servizio di alta qualità. </p>
       <div class="hotel-slider-container">
         <div class="hotel-slider">
-          <!-- Lista di hotel visualizzata come album -->
           <div class="hotel-list">
-            <!-- Ogni hotel diventa un link che reindirizza al proprio sito -->
-            <a class="hotel-link" :href="hotel.link" target="_blank" v-for="(hotel, index) in visibleHotels" :key="index">
-              <div class="hotel">
-                <img :src="hotel.image" alt="Hotel" class="hotel-image" />
-                <h3 class="hotel-name">{{ hotel.name }}</h3>
-                <p class="hotel-email">{{ hotel.email }}</p>
-              </div>
-            </a>
+            <div class="hotel" v-for="(hotel, index) in visibleHotels" :key="index">
+              <transition name="fade" mode="out-in">
+                <a :href="hotel.link" target="_blank" rel="noopener noreferrer">
+                  <img :src="hotel.image" alt="Hotel" class="hotel-image fade-in" :key="hotel.name" loading="lazy"/>
+                </a>
+              </transition>
+              <h3 class="hotel-name">{{ hotel.name }}</h3>
+              <p class="hotel-email">{{ hotel.email }}</p>
+            </div>
           </div>
         </div>
-
-        <!-- Frecce rotonde per scorrere avanti e indietro -->
         <div class="navigation-buttons">
           <button class="nav-button prev" @click="prevSlide">←</button>
           <button class="nav-button next" @click="nextSlide">→</button>
         </div>
+        <footer class="footer">
+          <!-- Questo spazio serve solo per alzare i pulsanti -->
+          <div class="footer-space"></div>
+        </footer>
       </div>
     </div>
   </div>
@@ -66,6 +73,9 @@ export default {
       return this.hotels.slice(this.currentSlide, this.currentSlide + 3);
     },
   },
+  mounted() {
+    this.shuffleHotels();
+  },
   methods: {
     nextSlide() {
       if (this.currentSlide + 3 < this.hotels.length) {
@@ -77,15 +87,12 @@ export default {
         this.currentSlide -= 1;
       }
     },
-    shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
+    shuffleHotels() {
+      for (let i = this.hotels.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [this.hotels[i], this.hotels[j]] = [this.hotels[j], this.hotels[i]];
       }
     },
-  },
-  mounted() {
-    this.shuffle(this.hotels);  // Mescola gli hotel quando il componente è montato
   },
 };
 </script>
@@ -94,19 +101,18 @@ export default {
 .page-container {
   display: flex;
   height: 100vh;
+  overflow-y: auto;
   margin-left: 15%;
-  overflow-y: auto; /* Abilita lo scorrimento verticale */
-  overflow-x: auto; /* Abilita lo scorrimento orizzontale */
+  margin-right: 0%;
 }
 
-/* Contenitore wrap per distanziare il contenuto dal bordo */
 .wrap {
   margin-left: 5%;
-  margin-right: 5%;
   width: 90%;
+  max-height: calc(100vh - 80px);
+  padding-bottom: 20px;
 }
 
-/* Stile per il titolo "Gli Hotels" */
 .title {
   font-size: 3rem;
   font-weight: bold;
@@ -115,7 +121,6 @@ export default {
   margin-bottom: 20px;
 }
 
-/* Stile per la descrizione sotto il titolo */
 .description {
   font-size: 1.2rem;
   text-align: left;
@@ -127,14 +132,13 @@ export default {
 .hotel-slider-container {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   width: 100%;
   padding: 20px;
 }
 
-/* Slider degli hotel */
 .hotel-slider {
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   overflow: hidden;
@@ -170,20 +174,33 @@ export default {
   margin-top: 5px;
 }
 
-/* Link che avvolge le card degli hotel */
-.hotel-link {
-  text-decoration: none;
-  color: inherit; /* Mantiene il colore del testo */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
 }
 
-/* Contenitore per i bottoni di navigazione */
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
 .navigation-buttons {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
 }
 
-/* Bottoni rotondi per navigazione */
 .nav-button {
   background-color: #f0a202;
   color: white;
@@ -200,5 +217,45 @@ export default {
 
 .nav-button:hover {
   background-color: #d18b00;
+}
+
+.footer {
+  width: 100%;
+  height: 50px; /* Altezza regolabile per lo spazio desiderato */
+  background-color: transparent; /* Puoi cambiare se desideri un colore di sfondo */
+}
+
+.footer-space {
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .hotel-slider-container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .hotel-image {
+    width: 100%;
+  }
+
+  .hotel-email {
+    font-size: 0.8rem;
+  }
+
+  .nav-button {
+    font-size: 1.5rem;
+  }
+
+  .hotel {
+    min-width: 50%;
+  }
 }
 </style>

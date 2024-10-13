@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router'; // Cambia createWebHistory con createWebHashHistory
 import HomePage from '@/components/HomePage.vue';
 import IsolaPage from '@/components/IsolaPage.vue';
 import HotelsPage from '@/components/HotelsPage.vue';
@@ -40,7 +40,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(), // Usa createWebHashHistory invece di createWebHistory
   routes,
 });
 

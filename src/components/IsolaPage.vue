@@ -4,10 +4,31 @@
     <div class="wrap">
       <h1 class="title">L'Isola</h1>
       <p class="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Panarea è una perla nel cuore delle Isole Eolie, un luogo dove il tempo sembra essersi fermato e il lusso
+        incontra la semplicità.
+        Quest'isola incantevole è famosa per le sue spiagge di ciottoli e le acque cristalline che abbracciano la costa.
+        Con una superficie di appena 3,4 chilometri quadrati, Panarea offre una combinazione perfetta di tranquillità e
+        bellezza naturale.
+      </p>
+      <p class="description">
+        L'isola è caratterizzata da un'atmosfera intima e accogliente, dove i visitatori possono immergersi nella storia
+        e nella cultura locali.
+        Le sue stradine pittoresche sono fiancheggiate da case bianche e giardini rigogliosi, creando un paesaggio da
+        cartolina.
+        Inoltre, Panarea è circondata da piccoli isolotti e scogli, che offrono opportunità uniche per l'esplorazione e
+        l'avventura.
+      </p>
+      <p class="description">
+        Gli appassionati di escursioni troveranno diversi sentieri panoramici che conducono a punti di osservazione
+        mozzafiato,
+        mentre gli amanti del mare possono godersi attività come snorkeling, immersioni subacquee e gite in barca.
+        La sera, l'isola si anima con ristoranti e locali che offrono una cucina eoliana autentica e deliziosa,
+        preparata con ingredienti freschi e locali.
+
+        Panarea è anche conosciuta per la sua vivace scena sociale, attirando visitatori da tutto il mondo che cercano
+        un'esperienza di lusso in un ambiente naturale incontaminato.
+        Con il suo mix di storia, natura e charme, Panarea è la destinazione ideale per chi desidera vivere un soggiorno
+        indimenticabile in un angolo di paradiso.
       </p>
       <div class="isola-slider-container">
         <div class="isola-slider">
@@ -15,12 +36,8 @@
             <div class="isola" v-for="(isola, index) in visibleIsole" :key="index">
               <!-- Transizione con effetto dissolvenza e fade-in -->
               <transition name="fade" mode="out-in">
-                <img
-                  :src="isola.images[isola.currentImageIndex]"
-                  alt="Isola"
-                  class="isola-image fade-in"
-                  :key="isola.currentImageIndex"
-                />
+                <img :src="isola.images[isola.currentImageIndex]" alt="Isola" class="isola-image fade-in"
+                  :key="isola.currentImageIndex" loading="lazy" />
               </transition>
               <h3 class="isola-name">{{ isola.name }}</h3>
               <p class="isola-description">{{ isola.description }}</p>
@@ -31,6 +48,10 @@
           <button class="nav-button prev" @click="prevSlide">←</button>
           <button class="nav-button next" @click="nextSlide">→</button>
         </div>
+        <footer class="footer">
+          <!-- Questo spazio serve solo per alzare i pulsanti -->
+          <div class="footer-space"></div>
+        </footer>
       </div>
     </div>
   </div>
@@ -47,73 +68,73 @@ export default {
   data() {
     return {
       isole: [
-        { 
-          name: 'Panarea', 
+        {
+          name: 'Panarea',
           images: [
-            require('@/assets/images/panarea.png'), 
-            require('@/assets/images/alba1.png'), 
-            require('@/assets/images/panarea2.png'), 
+            require('@/assets/images/panarea.png'),
+            require('@/assets/images/alba1.png'),
+            require('@/assets/images/panarea2.png'),
             require('@/assets/images/panarea3.png'),
-            require('@/assets/images/notte1.png'),  
-            require('@/assets/images/panarea4.png'), 
+            require('@/assets/images/notte1.png'),
+            require('@/assets/images/panarea4.png'),
             require('@/assets/images/panarea5.png'),
-            require('@/assets/images/alba3.png'),  
-            require('@/assets/images/panarea6.png'), 
-            require('@/assets/images/alba2.png'), 
+            require('@/assets/images/alba3.png'),
+            require('@/assets/images/panarea6.png'),
+            require('@/assets/images/alba2.png'),
             require('@/assets/images/panarea8.png')
-          ], 
-          description: 'Descrizione 1', 
-          currentImageIndex: 0 
+          ],
+          description: 'Descrizione 1',
+          currentImageIndex: 0
         },
-        { 
-          name: 'Calajunco', 
+        {
+          name: 'Le Spiaggie',
           images: [
-            require('@/assets/images/calajunco.png'), 
-            require('@/assets/images/calajunco2.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/villaggio.png'),  
+            require('@/assets/images/calajunco.png'),
+            require('@/assets/images/calajunco2.png'),
+            require('@/assets/images/calajunco3.png'),
+            require('@/assets/images/calcara.png'),
+            require('@/assets/images/villaggio.png'),
             require('@/assets/images/placeholder.png')
-          ], 
-          description: 'Descrizione 2', 
-          currentImageIndex: 0 
+          ],
+          description: 'Descrizione 2',
+          currentImageIndex: 0
         },
 
-        { 
-          name: 'Basiluzzo', 
+        {
+          name: 'Gli Isolotti',
           images: [
-            require('@/assets/images/panarea7.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'), 
+            require('@/assets/images/panarea7.png'),
+            require('@/assets/images/placeholder.png'),
+            require('@/assets/images/placeholder.png'),
+            require('@/assets/images/placeholder.png'),
             require('@/assets/images/placeholder.png')
-          ], 
-          description: 'Descrizione 5', 
-          currentImageIndex: 0 
+          ],
+          description: 'Descrizione 5',
+          currentImageIndex: 0
         },
-        { 
-          name: 'Dattilo', 
+        {
+          name: 'Dattilo',
           images: [
-            require('@/assets/images/dattilo.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'), 
+            require('@/assets/images/dattilo.png'),
+            require('@/assets/images/placeholder.png'),
+            require('@/assets/images/placeholder.png'),
+            require('@/assets/images/placeholder.png'),
             require('@/assets/images/placeholder.png')
-          ], 
-          description: 'Descrizione 6', 
-          currentImageIndex: 0 
+          ],
+          description: 'Descrizione 6',
+          currentImageIndex: 0
         },
-        { 
-          name: 'Bottaro', 
+        {
+          name: 'Bottaro',
           images: [
-            require('@/assets/images/dattilo.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'), 
-            require('@/assets/images/placeholder.png'), 
+            require('@/assets/images/dattilo.png'),
+            require('@/assets/images/placeholder.png'),
+            require('@/assets/images/placeholder.png'),
+            require('@/assets/images/placeholder.png'),
             require('@/assets/images/placeholder.png')
-          ], 
-          description: 'Descrizione 6', 
-          currentImageIndex: 0 
+          ],
+          description: 'Descrizione 6',
+          currentImageIndex: 0
         },
       ],
       currentSlide: 0,
@@ -155,8 +176,8 @@ export default {
 .page-container {
   display: flex;
   height: 100vh;
-  overflow-y: auto; /* Abilita lo scorrimento verticale */
-  overflow-x: auto; /* Abilita lo scorrimento orizzontale */
+  overflow-y: auto;
+  /* Abilita lo scorrimento verticale */
   margin-left: 15%;
   margin-right: 0%;
 }
@@ -164,8 +185,10 @@ export default {
 .wrap {
   margin-left: 5%;
   width: 90%;
-  max-height: calc(100vh - 80px); /* Regola l'altezza massima */
-  padding-bottom: 20px; /* Spazio in fondo per il contenuto */
+  max-height: calc(100vh - 80px);
+  /* Regola l'altezza massima */
+  padding-bottom: 20px;
+  /* Spazio in fondo per il contenuto */
 }
 
 .title {
@@ -189,6 +212,7 @@ export default {
   flex-direction: column;
   width: 100%;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .isola-slider {
@@ -230,10 +254,13 @@ export default {
 }
 
 /* Effetto di fade-in iniziale per le immagini */
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 1s ease;
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 
@@ -273,5 +300,47 @@ export default {
 
 .nav-button:hover {
   background-color: #d18b00;
+}
+.footer {
+  width: 100%;
+  height: 50px; /* Altezza regolabile per lo spazio desiderato */
+  background-color: transparent; /* Puoi cambiare se desideri un colore di sfondo */
+}
+
+.footer-space {
+  height: 100%;
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+  .isola-slider-container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .isola-image {
+    width: 100%;
+  }
+
+  .isola-description {
+    font-size: 0.8rem;
+  }
+
+  .nav-button {
+    font-size: 1.5rem;
+  }
+
+  /* Imposta la larghezza minima della .isola al 75% su schermi piccoli */
+  .isola {
+    min-width: 75%;
+  }
+  
 }
 </style>

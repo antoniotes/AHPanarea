@@ -17,7 +17,7 @@
                 <div class="isola-slider">
                     <div class="isola-list">
                         <div class="isola" v-for="(isola, index) in visibleIsole" :key="index">
-                            <img :src="isola.image" alt="Isola" class="isola-image" />
+                            <img :src="isola.image" alt="Isola" class="isola-image" loading="lazy" />
                             <h3 class="isola-name">{{ isola.name }}</h3>
                             <p class="isola-description">{{ isola.description }}</p>
                         </div>
@@ -27,6 +27,10 @@
                     <button class="nav-button prev" @click="prevSlide">←</button>
                     <button class="nav-button next" @click="nextSlide">→</button>
                 </div>
+                <footer class="footer">
+                    <!-- Questo spazio serve solo per alzare i pulsanti -->
+                    <div class="footer-space"></div>
+                </footer>
             </div>
         </div>
     </div>
@@ -111,6 +115,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow-y: auto;
     padding: 20px;
 }
 
@@ -174,5 +179,47 @@ export default {
 
 .nav-button:hover {
     background-color: #d18b00;
+}
+
+.footer {
+  width: 100%;
+  height: 50px; /* Altezza regolabile per lo spazio desiderato */
+  background-color: transparent; /* Puoi cambiare se desideri un colore di sfondo */
+}
+
+.footer-space {
+  height: 100%;
+}
+
+/* Media query per dispositivi mobili */
+@media (max-width: 768px) {
+    .isola-slider-container {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .isola-image {
+        width: 100%;
+    }
+
+    .isola-description {
+        font-size: 0.8rem;
+    }
+
+    .nav-button {
+        font-size: 1.5rem;
+    }
+
+    /* Imposta la larghezza minima della .isola al 75% su schermi piccoli */
+    .isola {
+        min-width: 75%;
+    }
 }
 </style>
