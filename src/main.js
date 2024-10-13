@@ -6,6 +6,7 @@ import router from './router';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons'; // Icona hamburger
+import './registerServiceWorker'
 
 // Aggiungi l'icona di Font Awesome alla libreria
 library.add(faBars);
@@ -26,7 +27,7 @@ app.mount('#app');
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-        .register('/service/service-worker.js')
+        .register('./service-worker.js', { scope: '/' }) // Modifica qui
         .then((registration) => {
           console.log('Service Worker registrato con successo:', registration);
         })

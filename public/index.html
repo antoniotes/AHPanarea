@@ -1,34 +1,52 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="it">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.png">
-  <title>
-    Associazione Albergatori Panarea
-  </title>
+  <title>Associazione Albergatori Panarea</title>
+
+  <!-- Preconnect e Preload per Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Preload dell'immagine LCP e del video di sfondo -->
+  <link rel="preload" href="<%= BASE_URL %>assets/images/logohotelierwhite.png" as="icon">
+  <link rel="preload" href="<%= BASE_URL %>assets/images/background.webm" as="video" type="video/webm">
+
+  <!-- Includi i CSS principali necessari per il rendering iniziale -->
+  <!-- <link rel="stylesheet" href="<%= BASE_URL %>css/essential.css"> -->
+
+  <!-- Script EmailJS caricato in modo asincrono -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" async></script>
+  <script async>
+    window.addEventListener('load', () => {
+      emailjs.init({
+        publicKey: "gDew2QVlTb4AlcOwC",
+      });
+    });
+  </script>
+
+  <!-- Script JS fondamentale caricato in modo differito -->
+  <!-- <script src="<%= BASE_URL %>js/essential.js" defer></script> -->
 
 </head>
 
 <body>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-  </script>
-  <script type="text/javascript">
-    (function () {
-      emailjs.init({
-        publicKey: "gDew2QVlTb4AlcOwC",
-      });
-    })();
-  </script>
   <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-        Please enable it to continue.</strong>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
   </noscript>
+
+  <!-- App Vue montata qui -->
   <div id="app"></div>
-  <!-- built files will be auto injected -->
+
+  <!-- Caricamento differito di script non fondamentali -->
+  <!-- <script src="<%= BASE_URL %>js/non-essential.js" defer></script> -->
+
 </body>
 
 </html>

@@ -12,7 +12,7 @@
       Your browser does not support the video tag.
     </video>
     <div class="content">
-      <img src="@/assets/images/logohotelierwhite.png" alt="Logo" class="logo" loading="lazy"/>
+      <img src="@/assets/images/logohotelierwhite.png" alt="Logo" class="logo"/>
       <div class="links">
         <router-link to="/isola">L'ISOLA</router-link>
         <router-link to="/arcipelago">L'ARCIPELAGO</router-link>
