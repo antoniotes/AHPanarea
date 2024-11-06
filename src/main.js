@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons'; // Icona hamburger
 import './registerServiceWorker'
 
+
 // Aggiungi l'icona di Font Awesome alla libreria
 library.add(faBars);
 

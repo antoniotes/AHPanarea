@@ -17,7 +17,7 @@
       <div class="navbar-links" v-if="!isMobile || isOpen">
         <router-link to="/" @click="toggleNavbar">HOME</router-link>
         <router-link to="/isola" @click="toggleNavbar">L'ISOLA</router-link>
-        <router-link to="/arcipelago" @click="toggleNavbar">L'ARCIPELAGO</router-link>
+        <!-- <router-link to="/arcipelago" @click="toggleNavbar">L'ARCIPELAGO</router-link> -->
         <router-link to="/hotels" @click="toggleNavbar">GLI HOTELS</router-link>
         <router-link to="/collegamenti" @click="toggleNavbar">I COLLEGAMENTI</router-link>
         <div class="separator"></div>

@@ -1,25 +1,33 @@
 const { defineConfig } = require('@vue/cli-service');
+
 module.exports = defineConfig({
   transpileDependencies: true,
 
-  // Configura il PWA plugin
   pwa: {
     name: 'Albergatori Panarea',
     themeColor: '#ffffff',
     msTileColor: '#000000',
     manifestOptions: {
-      background_color: '#ffffff'
+      background_color: '#ffffff',
+    },
+    iconPaths: {
+      favicon32: 'myfavicon.ico',
+      favicon16: 'myfavicon.ico',
+      appleTouchIcon: 'myfavicon.ico',
+      maskIcon: null,  // Per evitare il problema con favicon.svg
+      msTileImage: 'myfavicon.ico',
     },
     workboxOptions: {
+      cacheId: 'hotelier-panarea-cache',
       runtimeCaching: [
         {
-          urlPattern: new RegExp('^https://your-api-or-assets-url/'), // Puoi cambiare con l'URL degli asset
-          handler: 'CacheFirst', // Usa CacheFirst per gli asset statici
+          urlPattern: new RegExp('^/assets'), // Assicurati che questo corrisponda al percorso degli asset
+          handler: 'CacheFirst',
           options: {
-            cacheName: 'assets-cache',
+            cacheName: 'hotelier-panarea-assets-cache',
             expiration: {
-              maxEntries: 50, // Massimo numero di risorse da memorizzare
-              maxAgeSeconds: 30 * 24 * 60 * 60, // Mantiene gli asset per 30 giorni
+              maxEntries: 50,
+              maxAgeSeconds: 30 * 24 * 60 * 60,
             },
             cacheableResponse: {
               statuses: [0, 200],
@@ -27,17 +35,27 @@ module.exports = defineConfig({
           },
         },
         {
-          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webm|mp4)$/, // Cache per immagini e video
+          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webm|mp4)$/,
           handler: 'CacheFirst',
           options: {
             cacheName: 'image-cache',
             expiration: {
               maxEntries: 100,
-              maxAgeSeconds: 60 * 24 * 60 * 60, // Mantiene per 60 giorni
+              maxAgeSeconds: 60 * 24 * 60 * 60,
             },
           },
         },
       ],
-    }
-  }
+    },
+  },
+
+  devServer: {
+    host: 'localhost',
+    port: 8080,
+    hot: true,
+    open: true,
+    client: {
+      webSocketURL: 'ws://localhost:8080/ws',
+    },
+  },
 });

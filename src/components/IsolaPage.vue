@@ -71,79 +71,62 @@ export default {
         {
           name: 'Panarea',
           images: [
-            require('@/assets/images/panarea.png'),
-            require('@/assets/images/alba1.png'),
-            require('@/assets/images/panarea2.png'),
-            require('@/assets/images/panarea3.png'),
-            require('@/assets/images/notte1.png'),
-            require('@/assets/images/panarea4.png'),
-            require('@/assets/images/panarea5.png'),
-            require('@/assets/images/alba3.png'),
-            require('@/assets/images/panarea6.png'),
-            require('@/assets/images/alba2.png'),
-            require('@/assets/images/panarea8.png')
+            require('@/assets/images/panarea/1.png'),
+            require('@/assets/images/panarea/2.png'),
+            require('@/assets/images/panarea/3.png'),
+            require('@/assets/images/panarea/4.png'),
+            require('@/assets/images/panarea/5.png'),
+            require('@/assets/images/panarea/6.png'),
+            require('@/assets/images/panarea/7.png'),
+            require('@/assets/images/panarea/8.png'),
+            require('@/assets/images/panarea/9.png'),
+            require('@/assets/images/panarea/10.png'),
+            require('@/assets/images/panarea/11.png')
           ],
-          description: 'Descrizione 1',
+          description: 'Nata da un antico vulcano, Panarea offre paesaggi mozzafiato e un\'atmosfera unica',
           currentImageIndex: 0
         },
         {
           name: 'Le Spiaggie',
           images: [
-            require('@/assets/images/calajunco.png'),
-            require('@/assets/images/calajunco2.png'),
-            require('@/assets/images/calajunco3.png'),
-            require('@/assets/images/calcara.png'),
-            require('@/assets/images/villaggio.png'),
-            require('@/assets/images/placeholder.png')
+            require('@/assets/images/spiagge/1.png'),
+            require('@/assets/images/spiagge/2.png'),
+            require('@/assets/images/spiagge/3.png'),
+            require('@/assets/images/spiagge/4.png'),
+            require('@/assets/images/spiagge/5.png'),
+            require('@/assets/images/spiagge/6.png'),
+            require('@/assets/images/spiagge/7.png'),
+            require('@/assets/images/spiagge/8.png'),
+            require('@/assets/images/spiagge/9.png')
           ],
-          description: 'Descrizione 2',
+          description: 'Spiagge dai colori mozzafiato e la rarissima posidonia che accarezza la costa',
           currentImageIndex: 0
         },
-
         {
           name: 'Gli Isolotti',
           images: [
-            require('@/assets/images/panarea7.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png')
+            require('@/assets/images/isolotti/1.png'),
+            require('@/assets/images/isolotti/2.png'),
+            require('@/assets/images/isolotti/3.png'),
+            require('@/assets/images/isolotti/4.png'),
+            require('@/assets/images/isolotti/5.png'),
+            require('@/assets/images/isolotti/6.png'),
+            require('@/assets/images/isolotti/7.png'),
+            require('@/assets/images/isolotti/8.png'),
+            require('@/assets/images/isolotti/9.png')
           ],
-          description: 'Descrizione 5',
+          description: 'Piccoli paradisi naturali, gli isolotti di Panarea sono perfetti per esplorazioni indimenticabili',
           currentImageIndex: 0
-        },
-        {
-          name: 'Dattilo',
-          images: [
-            require('@/assets/images/dattilo.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png')
-          ],
-          description: 'Descrizione 6',
-          currentImageIndex: 0
-        },
-        {
-          name: 'Bottaro',
-          images: [
-            require('@/assets/images/dattilo.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png'),
-            require('@/assets/images/placeholder.png')
-          ],
-          description: 'Descrizione 6',
-          currentImageIndex: 0
-        },
+        }
       ],
       currentSlide: 0,
+      isMobile: window.innerWidth < 768
     };
   },
   computed: {
     visibleIsole() {
-      return this.isole.slice(this.currentSlide, this.currentSlide + 3);
-    },
+      return this.isMobile ? this.isole : this.isole.slice(this.currentSlide, this.currentSlide + 3);
+    }
   },
   methods: {
     nextSlide() {
@@ -157,27 +140,43 @@ export default {
       }
     },
     changeImage(isola) {
-      // Cambia l'indice dell'immagine corrente per ogni isola
       isola.currentImageIndex = (isola.currentImageIndex + 1) % isola.images.length;
     },
+    checkMobile() {
+      this.isMobile = window.innerWidth < 768;
+    },
+    shuffleIsole() {
+      for (let i = this.isole.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.isole[i], this.isole[j]] = [this.isole[j], this.isole[i]];
+      }
+    },
+    startImageChangeIntervals() {
+      this.isole.forEach((isola) => {
+        setInterval(() => {
+          this.changeImage(isola);
+        }, 5000);
+      });
+    }
   },
   mounted() {
-    // Imposta un intervallo per ogni isola che cambia immagine ogni 5 secondi
-    this.isole.forEach((isola, index) => {
-      setInterval(() => {
-        this.changeImage(isola);
-      }, (3 + index) * 1000); // 5 secondi iniziali + 1 secondo per ogni card
-    });
+    this.shuffleIsole();
+    this.startImageChangeIntervals();
+    window.addEventListener('resize', this.checkMobile);
   },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkMobile);
+  }
 };
 </script>
+
+
 
 <style scoped>
 .page-container {
   display: flex;
   height: 100vh;
   overflow-y: auto;
-  /* Abilita lo scorrimento verticale */
   margin-left: 15%;
   margin-right: 0%;
 }
@@ -186,9 +185,7 @@ export default {
   margin-left: 5%;
   width: 90%;
   max-height: calc(100vh - 80px);
-  /* Regola l'altezza massima */
   padding-bottom: 20px;
-  /* Spazio in fondo per il contenuto */
 }
 
 .title {
@@ -232,6 +229,8 @@ export default {
   min-width: 30%;
   margin: 0 10px;
   text-align: center;
+  /* Aggiungiamo una dimensione fissa */
+  flex: 0 0 30%;
 }
 
 .isola-image {
@@ -253,7 +252,6 @@ export default {
   margin-top: 5px;
 }
 
-/* Effetto di fade-in iniziale per le immagini */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
@@ -264,7 +262,6 @@ export default {
   opacity: 0;
 }
 
-/* Aggiungi l'animazione di fade-in al caricamento dell'immagine */
 .fade-in {
   opacity: 0;
   animation: fadeIn 1s ease forwards;
@@ -276,14 +273,12 @@ export default {
   }
 }
 
-/* Contenitore per i bottoni di navigazione */
 .navigation-buttons {
-  display: flex;
+  display: none;
   justify-content: flex-end;
   margin-top: 20px;
 }
 
-/* Bottoni rotondi per navigazione */
 .nav-button {
   background-color: #f0a202;
   color: white;
@@ -301,17 +296,17 @@ export default {
 .nav-button:hover {
   background-color: #d18b00;
 }
+
 .footer {
   width: 100%;
-  height: 50px; /* Altezza regolabile per lo spazio desiderato */
-  background-color: transparent; /* Puoi cambiare se desideri un colore di sfondo */
+  height: 100px;
+  background-color: transparent;
 }
 
 .footer-space {
   height: 100%;
 }
 
-/* Media query per dispositivi mobili */
 @media (max-width: 768px) {
   .isola-slider-container {
     padding: 10px;
@@ -333,14 +328,28 @@ export default {
     font-size: 0.8rem;
   }
 
-  .nav-button {
-    font-size: 1.5rem;
+  .navigation-buttons {
+    display: none;
   }
 
-  /* Imposta la larghezza minima della .isola al 75% su schermi piccoli */
   .isola {
     min-width: 75%;
+    flex: 0 0 75%; /* Aggiungiamo una dimensione fissa anche per mobile */
   }
-  
+
+  .isola-list {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
+
+  .isola {
+    scroll-snap-align: center;
+  }
+
+  .isola-list::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
+

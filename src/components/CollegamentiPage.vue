@@ -60,18 +60,19 @@ export default {
   data() {
     return {
       collegamenti: [
-        { name: 'Liberty Lines', description: 'Descrizione per Liberty Lines', image: require('@/assets/images/liberty.png'), link: 'https://www.libertylines.it' },
-        { name: 'Siremar Caronte & Tourist', description: 'Descrizione per Siremar Caronte & Tourist', image: require('@/assets/images/siremar.png'), link: 'https://www.siremar.it' },
-        { name: 'SNAV', description: 'Descrizione per SNAV', image: require('@/assets/images/snav.png'), link: 'https://www.snav.it' },
-        { name: 'AirPanarea', description: 'Descrizione per AirPanarea', image: require('@/assets/images/airpanarea.png'), link: 'https://www.airpanarea.com' },
+        { name: 'Liberty Lines', description: 'Collegamenti veloci su Panarea da Milazzo, Messina, Reggio Calabria e Vibo Valentia', image: require('@/assets/images/liberty.png'), link: 'https://www.libertylines.it' },
+        { name: 'Siremar Caronte & Tourist', description: 'Collegamenti in nave dotata di cabine tra Napoli e Panarea', image: require('@/assets/images/siremar.png'), link: 'https://www.siremar.it' },
+        { name: 'SNAV', description: 'Collegamenti veloci da Napoli a Panarea', image: require('@/assets/images/snav.png'), link: 'https://www.snav.it' },
+        { name: 'AirPanarea', description: 'Collegamenti esclusivi in elicottero da qualsiasi località verso Panarea', image: require('@/assets/images/airpanarea.png'), link: 'https://www.airpanarea.com' },
       ],
       currentSlide: 0,
+      isMobile: window.innerWidth < 768
     };
   },
   computed: {
     visibleCollegamenti() {
-      return this.collegamenti.slice(this.currentSlide, this.currentSlide + 3);
-    },
+      return this.isMobile ? this.collegamenti : this.collegamenti.slice(this.currentSlide, this.currentSlide + 3);
+    }
   },
   methods: {
     nextSlide() {
@@ -84,20 +85,26 @@ export default {
         this.currentSlide -= 1;
       }
     },
-    // Funzione per mescolare l'array dei collegamenti
     shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
     },
+    checkMobile() {
+      this.isMobile = window.innerWidth < 768;
+    }
   },
-  // Mescola i collegamenti quando il componente viene montato
   mounted() {
     this.shuffle(this.collegamenti);
+    window.addEventListener('resize', this.checkMobile);
   },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkMobile);
+  }
 };
 </script>
+
 
 <style scoped>
 .page-container {
@@ -156,6 +163,7 @@ export default {
   min-width: 30%;
   margin: 0 10px;
   text-align: center;
+  flex: 0 0 30%;
 }
 
 .collegamento-image {
@@ -179,21 +187,17 @@ export default {
 
 .footer {
   width: 100%;
-  height: 50px;
-  /* Altezza regolabile per lo spazio desiderato */
+  height: 100px;
   background-color: transparent;
-  /* Puoi cambiare se desideri un colore di sfondo */
 }
 
 .footer-space {
   height: 100%;
 }
 
-/* Link che avvolge le card dei collegamenti */
 .collegamento-link {
   text-decoration: none;
   color: inherit;
-  /* Mantiene il colore del testo */
 }
 
 .navigation-buttons {
@@ -237,15 +241,27 @@ export default {
     width: 100%;
   }
 
-
-
-  .nav-button {
-    font-size: 1.5rem;
+  .navigation-buttons {
+    display: none;
   }
-
 
   .collegamento-link {
     min-width: 75%;
+  }
+
+  .collegamenti-list {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
+
+  .collegamento {
+    min-width: 75%;
+    flex: 0 0 75%; /* Aggiungiamo una dimensione fissa anche per mobile */
+  }
+
+  .collegamenti-list::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>

@@ -15,7 +15,7 @@
       <img src="@/assets/images/logohotelierwhite.png" alt="Logo" class="logo"/>
       <div class="links">
         <router-link to="/isola">L'ISOLA</router-link>
-        <router-link to="/arcipelago">L'ARCIPELAGO</router-link>
+        <!-- <router-link to="/arcipelago">L'ARCIPELAGO</router-link> -->
         <router-link to="/hotels">HOTELS</router-link>
         <router-link to="/collegamenti">COLLEGAMENTI</router-link>
       </div>

@@ -6,11 +6,10 @@
                 <div class="wrap">
                     <h1 class="title">Contatti</h1>
                     <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                        labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea commodo
-                        consequat.
+                        Compila il modulo sottostante per ricevere ulteriori informazioni sui nostri servizi, listini
+                        prezzi e molto altro. Saremo felici di rispondere alle tue domande e fornirti tutto il supporto
+                        necessario. Siamo qui per aiutarti a pianificare il tuo soggiorno perfetto. Non esitare a
+                        contattarci!
                     </p>
                     <form @submit.prevent="sendEmail" class="contact-form">
                         <div class="form-group">
